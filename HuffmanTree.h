@@ -1,12 +1,13 @@
 //
 // Created by tlh on 2016/4/27.
 //
-
-#ifndef HUFFMAN_HUFFMANTREE_H
-#define HUFFMAN_HUFFMANTREE_H
+// Modified by cyZhu 2023.04.26
+#ifndef ALGRITHMHW_HUFFMANTREE_H
+#define ALGRITHMHW_HUFFMANTREE_H
 
 #include <iostream>
 #include <map>
+#include <unordered_map>
 #include <vector>
 
 using namespace std;
@@ -16,33 +17,29 @@ struct HuffmanTreeNode {
     int data;
     HuffmanTreeNode *left;
     HuffmanTreeNode *right;
-    HuffmanTreeNode *parent;
 
     HuffmanTreeNode() { }
 
-    HuffmanTreeNode(int w, int a) : weight(w), data(a), left(NULL), right(NULL), parent(NULL) { }
+    HuffmanTreeNode(int w, int d) : weight(w), data(d), left(nullptr), right(nullptr){ }
 
-    HuffmanTreeNode(int d) : weight(d), data('#'), left(NULL), right(NULL), parent(NULL) { }
-
-    HuffmanTreeNode(int d, HuffmanTreeNode *left, HuffmanTreeNode *right, HuffmanTreeNode *parent)
-            : weight(d), left(left), right(right), parent(parent) { }
-
-    bool operator>(HuffmanTreeNode &R) { return weight > R.weight; }
-
-    bool operator>=(HuffmanTreeNode &R) { return weight >= R.weight; }
-
-    bool operator<(HuffmanTreeNode &R) { return weight < R.weight; }
-
-    bool operator<=(HuffmanTreeNode &R) { return weight <= R.weight; }
+    HuffmanTreeNode(int w) : weight(w), data('#'), left(nullptr), right(nullptr) { }
 
     bool isLeaf() {
-        return left == NULL && right == NULL;
+        return left == nullptr && right == nullptr;
+    }
+};
+
+// 自定义最小堆比较方式
+class compare {
+public:
+    bool operator()(const HuffmanTreeNode *left, const HuffmanTreeNode *right) {
+        return left->weight > right->weight;
     }
 };
 
 class HuffmanTree {
 public:
-    HuffmanTree(HuffmanTreeNode **h, int n);
+    HuffmanTree(vector<HuffmanTreeNode*>& nodes);
 
     HuffmanTreeNode *getRoot() { return root; }
 
@@ -56,23 +53,19 @@ public:
 
     ~HuffmanTree();
 
-    //编码表
-    map<int, string> codeBook;
+    // 编码表
+    unordered_map<int, string> codeBook;
 private:
     HuffmanTreeNode *root;
 
-    int leafCount;
-
-    void mergeTree(HuffmanTreeNode &lchildTree, HuffmanTreeNode *parent, HuffmanTreeNode &rchildTree);
-
     void _deleteTree(HuffmanTreeNode *p);
 
-    void buildCode(HuffmanTreeNode node, string s);
+    void buildCode(HuffmanTreeNode* node, string s);
 
-    void writeCode(vector<int> binaryData, FILE *fout);
+    void writeCode(vector<int>& binaryData, FILE *fout);
 
-    void writeWeight(int weight[], FILE *fout);
+    void writeWeight(vector<int>& weight, FILE *fout);
 
 };
 
-#endif //HUFFMAN_HUFFMANTREE_H
+#endif //ALGRITHMHW_HUFFMANTREE_H

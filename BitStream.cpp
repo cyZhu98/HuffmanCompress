@@ -1,8 +1,8 @@
 //
-// Created by tlh on 2016/4/29.
+// Created by zichu on 2023/4/26.
 //
 
-#include "BitStream.h"
+#include "BitStream.hpp"
 
 bool BitStream::getBit(bool& data) {
     if (stream.empty()&&!feof(fin)) {
@@ -21,7 +21,7 @@ void BitStream::_getNewByte() {
     bool bitCode[8];
     int one = fgetc(fin);
     if (feof(fin)) {
-        //one是所读取文件的一个最后一个字节
+        // one是所读取文件的一个最后一个字节
 //        one>>=8-lastCodesCount;
         for (int i = lastCodesCount - 1; i >= 0; --i) {
             bitCode[i] = (bool) (one % 2);
@@ -40,6 +40,3 @@ void BitStream::_getNewByte() {
         }
     }
 }
-
-
-

@@ -1,9 +1,9 @@
 //
-// Created by tlh on 2016/4/29.
+// Created by zichu on 2023/4/26.
 //
 
-#ifndef HUFFMAN_BITSTREAM_H
-#define HUFFMAN_BITSTREAM_H
+#ifndef ALGRITHMHW_BITSTREAM_HPP
+#define ALGRITHMHW_BITSTREAM_HPP
 
 #include <iostream>
 #include <queue>
@@ -24,5 +24,4 @@ public:
     bool getBit(bool &data);
 };
 
-
-#endif //HUFFMAN_BITSTREAM_H
+#endif //ALGRITHMHW_BITSTREAM_HPP
